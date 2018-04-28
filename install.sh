@@ -7,6 +7,10 @@ directory=$(dirname "$0")
 cd ${directory}
 dir="$(pwd)"
 
+if grep -q "HOME/bin" ~/.bashrc; then
+    echo "export PATH=\$HOME/bin:\$PATH" >> ~/.bashrc
+fi
+
 if [ ! -f ~/bin/decompiler ] && type ant 2>/dev/null; then
     cd fernflower-decompiler
     ant clean
