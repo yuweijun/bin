@@ -39,7 +39,7 @@ if [ ! -f ~/bin/decompiler ] && type ant 2>/dev/null; then
     cp fernflower.jar ~/bin/java
     echo -e "#!/bin/bash\njava -jar ~/bin/java/fernflower.jar \$@" > ~/bin/decompiler
     chmod a+x ~/bin/decompiler
-    cd ..
+    cd -
 elif [ -f ~/bin/decompiler ]; then
     echo "decompiler file exists."
 elif type ant 2>/dev/null; then
@@ -52,6 +52,7 @@ if [ ! -f ~/bin/jd-cli ] && type mvn 2>/dev/null; then
     cp jd-cli/target/jd-cli.jar ~/bin/java
     echo -e "#!/bin/bash\njava -jar ~/bin/java/jd-cli.jar \$@" > ~/bin/jd-cli
     chmod a+x ~/bin/jd-cli
+    cd -
 elif [ -f ~/bin/jd-cli ]; then
     echo "jd-cli file exists."
 elif type mvn 2>/dev/null; then
@@ -76,6 +77,7 @@ if [ ! -f ~/bin/sjk ] && type mvn 2>/dev/null; then
     cp sjk/target/sjk-*-SNAPSHOT.jar ~/bin/java/sjk.jar
     echo -e "#!/bin/bash\njava -jar ~/bin/java/sjk.jar \$@" > ~/bin/sjk
     chmod a+x ~/bin/sjk
+    cd -
 elif [ -f ~/bin/sjk ]; then
     echo "sjk file exists."
 elif type mvn 2>/dev/null; then
