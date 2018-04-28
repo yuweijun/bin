@@ -93,7 +93,7 @@ fi
 if [ -f ~/bin/mitmproxy ]; then
     echo "~/bin/mitmproxy found"
 else
-    mitmproxy/dev.sh
-    cp mitmproxy/venv/bin/mitm* ~/bin
+    ${dir}/mitmproxy/dev.sh
+    cp ${dir}/mitmproxy/venv/bin/mitm* ~/bin
 fi
 
