@@ -13,3 +13,6 @@
 [submodule "mitmproxy"]
 	path = mitmproxy
 	url = https://github.com/mitmproxy/mitmproxy.git
+[submodule "nvm"]
+	path = nvm
+	url = https://github.com/creationix/nvm.git

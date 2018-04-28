@@ -1,8 +1,10 @@
 ## install softwares in ubuntu
 
-### for ubuntu desktop
+    $ sudo ./ubuntu.sh
 
-    $ sudo apt install -y xclip
+### install softwares in centos7 as root
+
+    $ ./centos7.sh
 
 ## linux tools
 
