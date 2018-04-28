@@ -10,6 +10,3 @@
 [submodule "greys-anatomy"]
 	path = greys-anatomy
 	url = https://github.com/oldmanpushcart/greys-anatomy.git
-[submodule "ag"]
-	path = ag
-	url = https://github.com/ggreer/the_silver_searcher.git

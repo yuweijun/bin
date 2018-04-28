@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "git submodule update --init --remote --recursive"
 git submodule update --init --remote --recursive
 
 directory=$(dirname "$0")
@@ -12,7 +13,7 @@ if [ ! -f ~/bin/decompiler ] && type ant 2>/dev/null; then
     ant
     mkdir -p ~/bin/java
     cp fernflower.jar ~/bin/java
-    echo "#!/bin/bash\njava -jar ~/bin/java/fernflower.jar $@" > ~/bin/decompiler
+    echo -e "#!/bin/bash\njava -jar ~/bin/java/fernflower.jar \$@" > ~/bin/decompiler
     chmod a+x ~/bin/decompiler
     cd ..
 fi
@@ -20,6 +21,6 @@ fi
 if [ ! -f ~/bin/greys ]; then
     mkdir -p ~/bin/java
     cp greys-anatomy/bin/greys.sh ~/bin/java
-    echo "#!/bin/bash\nJAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ~/bin/java/greys.sh $@" > ~/bin/greys
+    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ~/bin/java/greys.sh \$@" > ~/bin/greys
     chmod a+x ~/bin/greys
 fi
