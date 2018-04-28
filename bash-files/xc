@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if type xclip 2>/dev/null; then
+    xclip -i -selection clipboard
+fi

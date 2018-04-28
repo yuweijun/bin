@@ -1,11 +1,23 @@
 #!/bin/bash
 
+cd $(dirname "$0")
+dir="$(pwd)/bash-files"
+
+for f in $(ls ${dir})
+do
+    file=${dir}/${f}
+    if [ ! -f ~/bin/${f} ]; then
+        echo "cp ${file} ~/bin"
+        cp ${file} ~/bin
+    else
+        echo "~/bin/${f} is exists"
+    fi
+done
+
+# exit 0
+
 echo "git submodule update --init --remote --recursive"
 git submodule update --init --remote --recursive
-
-directory=$(dirname "$0")
-cd ${directory}
-dir="$(pwd)"
 
 if grep -q "HOME/bin" ~/.bashrc; then
     echo "export PATH=\$HOME/bin:\$PATH" >> ~/.bashrc
@@ -57,3 +69,17 @@ elif [ -f ~/bin/sslpoke ]; then
 elif type mvn 2>/dev/null; then
     echo "mvn command not found."
 fi
+
+if [ ! -f ~/bin/sjk ] && type mvn 2>/dev/null; then
+    mkdir -p ~/bin/java
+    cd jvm-tools
+    mvn clean package
+    cp sjk/target/sjk-*-SNAPSHOT.jar ~/bin/java/sjk.jar
+    echo -e "#!/bin/bash\njava -jar ~/bin/java/sjk.jar \$@" > ~/bin/sjk
+    chmod a+x ~/bin/sjk
+elif [ -f ~/bin/sjk ]; then
+    echo "sjk file exists."
+elif type mvn 2>/dev/null; then
+    echo "mvn command not found."
+fi
+
