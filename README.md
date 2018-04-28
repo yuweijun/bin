@@ -8,6 +8,7 @@
 
 ## linux tools
 
-    $ git clone https://github.com/yuweijun/bin.jar
-    $ cd bin
+    $ git clone https://github.com/yuweijun/bin.git bin.git
+    $ cd bin.git
+    $ sudo ./ubuntu.sh
     $ ./install.sh
