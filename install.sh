@@ -2,21 +2,25 @@
 
 cd $(dirname "$0")
 dir="$(pwd)"
+dest=$HOME/bin
+if [ $USER -eq root ]; then
+    dest=/usr/local/bin
+fi
 
-mkdir -p ~/bin/java
+mkdir -p ${dest}/java
 
-if grep -q "HOME/bin" ~/.bashrc; then
-    echo "export PATH=\$HOME/bin:\$PATH" >> ~/.bashrc
+if grep -q "${dest}" ~/.bashrc; then
+    echo -e "export PATH=${dest}:\$PATH" >> ~/.bashrc
 fi
 
 for f in $(ls ${dir}/bash-files)
 do
     file=${dir}/bash-files/${f}
-    if [ ! -f ~/bin/${f} ]; then
-        echo "cp ${file} ~/bin"
-        cp ${file} ~/bin
+    if [ ! -f ${dest}/${f} ]; then
+        echo "cp ${file} ${dest}"
+        cp ${file} ${dest}
     else
-        echo "~/bin/${f} is exists"
+        echo "${dest}/${f} is exists"
     fi
 done
 
@@ -25,60 +29,58 @@ done
 echo "git submodule update --init --remote --recursive"
 git submodule update --init --remote --recursive
 
-if [ ! -f ~/bin/greys ]; then
-    cp greys-anatomy/bin/greys.sh ~/bin/java
-    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ~/bin/java/greys.sh \$@" > ~/bin/greys
-    chmod a+x ~/bin/greys
+if [ ! -f ${dest}/greys ]; then
+    cp greys-anatomy/bin/greys.sh ${dest}/java
+    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ${dest}/java/greys.sh \$@" > ${dest}/greys
+    chmod a+x ${dest}/greys
 fi
 
-if [ ! -f ~/bin/decompiler ] && type ant 2>/dev/null; then
+if [ ! -f ${dest}/decompiler ] && type ant 2>/dev/null; then
     cd fernflower-decompiler
     ant clean
     ant
-    mkdir -p ~/bin/java
-    cp fernflower.jar ~/bin/java
-    echo -e "#!/bin/bash\njava -jar ~/bin/java/fernflower.jar \$@" > ~/bin/decompiler
-    chmod a+x ~/bin/decompiler
+    cp fernflower.jar ${dest}/java
+    echo -e "#!/bin/bash\njava -jar ${dest}/java/fernflower.jar \$@" > ${dest}/decompiler
+    chmod a+x ${dest}/decompiler
     cd -
-elif [ -f ~/bin/decompiler ]; then
+elif [ -f ${dest}/decompiler ]; then
     echo "decompiler file exists."
 elif type ant 2>/dev/null; then
     echo "ant command not found."
 fi
 
-if [ ! -f ~/bin/jd-cli ] && type mvn 2>/dev/null; then
+if [ ! -f ${dest}/jd-cli ] && type mvn 2>/dev/null; then
     cd jd-cmd
     mvn clean package
-    cp jd-cli/target/jd-cli.jar ~/bin/java
-    echo -e "#!/bin/bash\njava -jar ~/bin/java/jd-cli.jar \$@" > ~/bin/jd-cli
-    chmod a+x ~/bin/jd-cli
+    cp jd-cli/target/jd-cli.jar ${dest}/java
+    echo -e "#!/bin/bash\njava -jar ${dest}/java/jd-cli.jar \$@" > ${dest}/jd-cli
+    chmod a+x ${dest}/jd-cli
     cd -
-elif [ -f ~/bin/jd-cli ]; then
+elif [ -f ${dest}/jd-cli ]; then
     echo "jd-cli file exists."
 elif type mvn 2>/dev/null; then
     echo "mvn command not found."
 fi
 
-if [ ! -f ~/bin/sslpoke ] && type mvn 2>/dev/null; then
+if [ ! -f ${dest}/sslpoke ] && type mvn 2>/dev/null; then
     mvn clean package
-    cp target/bin.jar ~/bin/java
-    echo -e "#!/bin/bash\njava -cp ~/bin/java/bin.jar SSLPoke \$@" > ~/bin/sslpoke
-    chmod a+x ~/bin/sslpoke
-elif [ -f ~/bin/sslpoke ]; then
+    cp target/bin.jar ${dest}/java
+    echo -e "#!/bin/bash\njava -cp ${dest}/java/bin.jar SSLPoke \$@" > ${dest}/sslpoke
+    chmod a+x ${dest}/sslpoke
+elif [ -f ${dest}/sslpoke ]; then
     echo "sslpoke file exists."
 elif type mvn 2>/dev/null; then
     echo "mvn command not found."
 fi
 
-if [ ! -f ~/bin/sjk ] && type mvn 2>/dev/null; then
-    mkdir -p ~/bin/java
+if [ ! -f ${dest}/sjk ] && type mvn 2>/dev/null; then
     cd jvm-tools
     mvn clean package
-    cp sjk/target/sjk-*-SNAPSHOT.jar ~/bin/java/sjk.jar
-    echo -e "#!/bin/bash\njava -jar ~/bin/java/sjk.jar \$@" > ~/bin/sjk
-    chmod a+x ~/bin/sjk
+    cp sjk/target/sjk-*-SNAPSHOT.jar ${dest}/java/sjk.jar
+    echo -e "#!/bin/bash\njava -jar ${dest}/java/sjk.jar \$@" > ${dest}/sjk
+    chmod a+x ${dest}/sjk
     cd -
-elif [ -f ~/bin/sjk ]; then
+elif [ -f ${dest}/sjk ]; then
     echo "sjk file exists."
 elif type mvn 2>/dev/null; then
     echo "mvn command not found."
@@ -92,12 +94,12 @@ else
     echo "[ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"" >> ~/.bashrc
 fi
 
-if [ -f ~/bin/mitmproxy ]; then
-    echo "~/bin/mitmproxy found"
+if [ -f ${dest}/mitmproxy ]; then
+    echo "${dest}/mitmproxy found"
 else
     cd ${dir}/mitmproxy
     ./dev.sh
-    cp ${dir}/mitmproxy/venv/bin/mitm* ~/bin
+    cp ${dir}/mitmproxy/venv/bin/mitm* ${dest}
     cd -
 fi
 
