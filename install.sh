@@ -3,7 +3,7 @@
 cd $(dirname "$0")
 dir="$(pwd)"
 dest=$HOME/bin
-if [ $USER -eq root ]; then
+if [ $USER == "root" ]; then
     dest=/usr/local/bin
 fi
 
