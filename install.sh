@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 cd $(dirname "$0")
 dir="$(pwd)"
 dest=$HOME/bin
@@ -26,7 +29,6 @@ done
 
 # exit 0
 
-echo "git submodule update --init --remote --recursive"
 git submodule update --init --remote --recursive
 
 if [ ! -f ${dest}/greys ]; then
