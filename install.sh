@@ -3,7 +3,7 @@
 set -e
 set -x
 
-cd $(dirname "$0")
+cd $(dirname "$0") || exit
 dir="$(pwd)"
 dest=$HOME/bin
 if [ $USER == "root" ]; then
@@ -21,7 +21,7 @@ do
     file=${dir}/bash-files/${f}
     if [ ! -f ${dest}/${f} ]; then
         echo "cp ${file} ${dest}"
-        cp ${file} ${dest}
+        cp "${file}" "${dest}"
     else
         echo "${dest}/${f} is exists"
     fi
@@ -38,7 +38,7 @@ if [ ! -f ${dest}/greys ]; then
 fi
 
 if [ ! -f ${dest}/decompiler ] && type ant 2>/dev/null; then
-    cd fernflower-decompiler
+    cd fernflower-decompiler || exit
     ant clean
     ant
     cp fernflower.jar ${dest}/java
@@ -52,7 +52,7 @@ elif type ant 2>/dev/null; then
 fi
 
 if [ ! -f ${dest}/jd-cli ] && type mvn 2>/dev/null; then
-    cd jd-cmd
+    cd jd-cmd || exit
     mvn clean package
     cp jd-cli/target/jd-cli.jar ${dest}/java
     echo -e "#!/bin/bash\njava -jar ${dest}/java/jd-cli.jar \$@" > ${dest}/jd-cli
@@ -76,7 +76,7 @@ elif type mvn 2>/dev/null; then
 fi
 
 if [ ! -f ${dest}/sjk ] && type mvn 2>/dev/null; then
-    cd jvm-tools
+    cd jvm-tools || exit
     mvn clean package
     cp sjk/target/sjk-*-SNAPSHOT.jar ${dest}/java/sjk.jar
     echo -e "#!/bin/bash\njava -jar ${dest}/java/sjk.jar \$@" > ${dest}/sjk
@@ -99,7 +99,7 @@ fi
 if [ -f ${dest}/mitmproxy ]; then
     echo "${dest}/mitmproxy found"
 else
-    cd ${dir}/mitmproxy
+    cd ${dir}/mitmproxy || exit
     ./dev.sh
     cp ${dir}/mitmproxy/venv/bin/mitm* ${dest}
     cd -
