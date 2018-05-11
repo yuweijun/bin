@@ -6,9 +6,13 @@
 
     $ os/centos7.sh
 
-## linux tools
+## install with init
 
     $ git clone https://github.com/yuweijun/bin.git bin.git
     $ cd bin.git
     $ sudo os/ubuntu.sh
+    $ ./install.sh init
+
+### reinstall
+
     $ ./install.sh

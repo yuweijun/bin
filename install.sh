@@ -27,9 +27,7 @@ do
     fi
 done
 
-# exit 0
-
-if [ $# -gt 0 ] && [ "$1" = "update" ]; then
+if [ $# -gt 0 ] && [ "$1" = "init" ]; then
     if git submodule update --init --remote --recursive 2>/dev/null; then
         echo "git version is too old"
     else
