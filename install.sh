@@ -29,7 +29,15 @@ done
 
 # exit 0
 
-git submodule update --init --remote --recursive
+if [ $# -eq 0 ]; then
+    if git submodule update --init --remote --recursive 2>/dev/null; then
+        echo "git version is too old"
+    else
+        git submodule update --init --recursive
+    fi
+else
+    echo "# git submodule update --init --remote --recursive"
+fi
 
 if [ ! -f ${dest}/greys ]; then
     cp greys-anatomy/bin/greys.sh ${dest}/java
