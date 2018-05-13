@@ -6,8 +6,19 @@ set -x
 cd $(dirname "$0") || exit
 dir="$(pwd)"
 dest=$HOME/bin
+
 if [ $USER == "root" ]; then
     dest=/usr/local/bin
+fi
+
+if [ ! -e .git/modules ]; then
+    git submodule update --init --recursive
+elif [ $# -gt 0 ] && [ "$1" = "init" ]; then
+    git submodule update --init --recursive
+elif [ $# -gt 0 ] && [ "$1" = "remote" ]; then
+    git submodule update --init --recursive --remote
+else
+    echo "usage: ./install.sh [--init|--remote]"
 fi
 
 mkdir -p ${dest}/java
@@ -26,16 +37,6 @@ do
         echo "${dest}/${f} is exists"
     fi
 done
-
-if [ $# -gt 0 ] && [ "$1" = "init" ]; then
-    if git submodule update --init --remote --recursive 2>/dev/null; then
-        echo "git version is too old"
-    else
-        git submodule update --init --recursive
-    fi
-else
-    echo "# git submodule update --init --remote --recursive"
-fi
 
 if [ ! -f ${dest}/greys ]; then
     cp greys-anatomy/bin/greys.sh ${dest}/java
@@ -92,22 +93,5 @@ elif [ -f ${dest}/sjk ]; then
     echo "sjk file exists."
 elif type mvn 2>/dev/null; then
     echo "mvn command not found."
-fi
-
-if grep -q NVM_DIR ~/.bashrc 2>/dev/null; then
-    echo "NVM_DIR config found"
-else
-    echo "export NVM_DIR=\"${dir}/nvm\"" >> ~/.bashrc
-    echo "[ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\"" >> ~/.bashrc
-    echo "[ -s \"\$NVM_DIR/bash_completion\" ] && \. \"\$NVM_DIR/bash_completion\"" >> ~/.bashrc
-fi
-
-if [ -f ${dest}/mitmproxy ]; then
-    echo "${dest}/mitmproxy found"
-else
-    cd ${dir}/mitmproxy || exit
-    ./dev.sh
-    cp ${dir}/mitmproxy/venv/bin/mitm* ${dest}
-    cd -
 fi
 
