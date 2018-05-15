@@ -2,4 +2,6 @@
 
 if type xclip 2>/dev/null; then
     xclip -o
+elif type pbpaste > /dev/null 2>&1; then
+    pbpaste
 fi

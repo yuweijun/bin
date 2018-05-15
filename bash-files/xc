@@ -1,5 +1,7 @@
 #!/bin/bash
 
-if type xclip 2>/dev/null; then
+if type xclip > /dev/null 2>&1; then
     xclip -i -selection clipboard
+elif type pbcopy > /dev/null 2>&1; then
+    pbcopy
 fi

@@ -30,12 +30,7 @@ fi
 for f in $(ls ${dir}/bash-files)
 do
     file=${dir}/bash-files/${f}
-    if [ ! -f ${dest}/${f} ]; then
-        echo "cp ${file} ${dest}"
-        cp "${file}" "${dest}"
-    else
-        echo "${dest}/${f} is exists"
-    fi
+    cp "${file}" "${dest}"
 done
 
 if [ ! -f ${dest}/greys ]; then
