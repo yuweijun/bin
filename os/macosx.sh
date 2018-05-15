@@ -14,3 +14,5 @@ brew cask install java8
 brew install gradle maven
 
 pip2 install pygments
+
+npm install --global prettier
