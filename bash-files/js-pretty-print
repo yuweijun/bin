@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# apt install pygments
+# npm i -g js-beautify
+
+if [ $# -gt 0 ]; then
+    js-beautify $@ | pygmentize -l js
+else
+    if type xclip > /dev/null 2>&1; then
+        xclip -o | js-beautify | pygmentize -l js
+    elif type pbpaste > /dev/null 2>&1; then
+        pbpaste | js-beautify | pygmentize -l js
+    fi
+fi

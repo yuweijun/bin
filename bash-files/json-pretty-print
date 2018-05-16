@@ -3,8 +3,12 @@
 # install pygments
 # sudo apt install python-pygments xclip
 
-if type xclip > /dev/null 2>&1; then
-    xclip -o | python -m json.tool | pygmentize -l json
-elif type pbpaste > /dev/null 2>&1; then
-    pbpaste | python -m json.tool | pygmentize -l json
+if [ $# -gt 0 ]; then
+    python -m json.tool $@ | pygmentize -l json
+else
+    if type xclip > /dev/null 2>&1; then
+        xclip -o | python -m json.tool | pygmentize -l json
+    elif type pbpaste > /dev/null 2>&1; then
+        pbpaste | python -m json.tool | pygmentize -l json
+    fi
 fi
