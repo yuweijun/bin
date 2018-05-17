@@ -1,0 +1,2 @@
+#!/bin/bash
+java -jar /home/git/bin.git/bin/java/jd-cli.jar $@
