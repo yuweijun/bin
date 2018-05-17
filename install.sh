@@ -14,7 +14,7 @@ DIR="$(pwd)"
 INIT=false
 REMOTE=false
 FORCE=false
-DEST=$HOME/bin
+DEST=${DIR}/bash-files
 
 while true; do
   case "$1" in
@@ -28,10 +28,6 @@ done
 
 # set -e
 # set -x
-
-if [ $UID -eq 0 ]; then
-    DEST=/usr/local/bin
-fi
 
 if $INIT; then
     git submodule update --init --recursive
@@ -49,12 +45,6 @@ mkdir -p ${DEST}/java
 if grep -q "${DEST}" $HOME/.bashrc; then
     echo -e "export PATH=${DEST}:\$PATH" >> $HOME/.bashrc
 fi
-
-for f in $(ls ${DIR}/bash-files)
-do
-    file=${DIR}/bash-files/${f}
-    cp -r "${file}" "${DEST}"
-done
 
 if [ ! -f ${DEST}/greys ] || ${FORCE}; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
@@ -113,4 +103,11 @@ if [ ! -f ${DEST}/sjk ] || ${FORCE}; then
 elif [ -f ${DEST}/sjk ]; then
     echo "sjk file exists."
 fi
+
+for f in $(ls ${DEST})
+do
+    file=${DIR}/bash-files/${f}
+    mkdir -p ${HOME}/bin
+    cp -r "${file}" ${HOME}/bin
+done
 
