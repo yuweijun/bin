@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp /home/git/bin.git/bin/java/bin.jar SSLPoke $@
+java -cp ${HOME}/bin/java/bin.jar SSLPoke $@

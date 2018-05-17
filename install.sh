@@ -14,7 +14,7 @@ DIR="$(pwd)"
 INIT=false
 REMOTE=false
 FORCE=false
-DEST=$DIR/bin
+DEST=$HOME/bin
 
 while true; do
   case "$1" in
@@ -58,7 +58,7 @@ done
 
 if [ ! -f ${DEST}/greys ] || ${FORCE}; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
-    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ${DEST}/java/greys.sh \$@" > ${DEST}/greys
+    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} \${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
     chmod a+x ${DEST}/greys
 fi
 
@@ -70,7 +70,7 @@ else
         ant clean
         ant
         cp fernflower.jar ${DEST}/java
-        echo -e "#!/bin/bash\njava -jar ${DEST}/java/fernflower.jar \$@" > ${DEST}/decompiler
+        echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/fernflower.jar \$@" > ${DEST}/decompiler
         chmod a+x ${DEST}/decompiler
         cd -
     elif [ -f ${DEST}/decompiler ]; then
@@ -87,7 +87,7 @@ if [ ! -f ${DEST}/jd-cli ] || ${FORCE}; then
     cd jd-cmd || exit
     mvn clean package
     cp jd-cli/target/jd-cli.jar ${DEST}/java
-    echo -e "#!/bin/bash\njava -jar ${DEST}/java/jd-cli.jar \$@" > ${DEST}/jd-cli
+    echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/jd-cli.jar \$@" > ${DEST}/jd-cli
     chmod a+x ${DEST}/jd-cli
     cd -
 elif [ -f ${DEST}/jd-cli ]; then
@@ -97,7 +97,7 @@ fi
 if [ ! -f ${DEST}/sslpoke ] || ${FORCE}; then
     mvn clean package
     cp target/bin.jar ${DEST}/java
-    echo -e "#!/bin/bash\njava -cp ${DEST}/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
+    echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
     chmod a+x ${DEST}/sslpoke
 elif [ -f ${DEST}/sslpoke ]; then
     echo "sslpoke file exists."
@@ -107,7 +107,7 @@ if [ ! -f ${DEST}/sjk ] || ${FORCE}; then
     cd jvm-tools || exit
     mvn clean package
     cp sjk/target/sjk-*-SNAPSHOT.jar ${DEST}/java/sjk.jar
-    echo -e "#!/bin/bash\njava -jar ${DEST}/java/sjk.jar \$@" > ${DEST}/sjk
+    echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/sjk.jar \$@" > ${DEST}/sjk
     chmod a+x ${DEST}/sjk
     cd -
 elif [ -f ${DEST}/sjk ]; then

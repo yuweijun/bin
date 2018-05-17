@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar /home/git/bin.git/bin/java/sjk.jar $@
+java -jar ${HOME}/bin/java/sjk.jar $@
