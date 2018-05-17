@@ -106,7 +106,7 @@ fi
 
 for f in $(ls ${DEST})
 do
-    file=${DIR}/bash-files/${f}
+    file=${DEST}/${f}
     mkdir -p ${HOME}/bin
     cp -r "${file}" ${HOME}/bin
 done
