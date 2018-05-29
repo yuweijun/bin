@@ -14,8 +14,7 @@ public class Premain {
         System.out.printf("%30s : %s\n", "premain in", Premain.class.getCanonicalName());
 
         // save cglib generated classes
-        String debugLocation = System.getProperty("java.io.tmpdir") + "cblib-classes";
-        System.setProperty("cglib.debugLocation", debugLocation);
+        System.setProperty("cglib.debugLocation", "target/cblib-classes");
 
         // Provides services that allow Java programming language agents to instrument programs running on the JVM.
         instrumentation = inst;

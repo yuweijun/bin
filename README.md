@@ -16,3 +16,10 @@
 ### reinstall
 
     $ ./install.sh
+
+## 保存字节码生成的classes
+
+    1. cglib生成的类保存目录为：`target/cblib-classes`
+    1. 反射生成的类保存目录为：`target/generated-classes`
+
+    $ java -javaagent:target/bin.jar -cp "target/classes" SSLPoke www.baidu.com 443
