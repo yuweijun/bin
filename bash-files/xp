@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if type xclip 2>/dev/null; then
+if type xclip &> /dev/null; then
     xclip -o
-elif type pbpaste > /dev/null 2>&1; then
+elif type pbpaste &> /dev/null; then
     pbpaste
 fi
