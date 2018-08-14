@@ -1,14 +1,6 @@
 #!/bin/bash
 
-ARGV=$(getopt -o rif -l remote,init,force -- "$@")
-if [ $? != 0 ] ; then
-    echo "getopt error"
-fi
-
-eval set -- "$ARGV"
-
 cd $(dirname "$0") || exit
-
 DIR="$(pwd)"
 
 INIT=false
@@ -16,14 +8,14 @@ REMOTE=false
 FORCE=false
 DEST=${DIR}/bash-files
 
-while true; do
-  case "$1" in
-    -r | --remote ) REMOTE=true; shift ;;
-    -i | --init ) INIT=true; shift ;;
-    -f | --force ) FORCE=true; shift ;;
-    -- ) shift; break ;;
-    * ) break ;;
-  esac
+while getopts irs arg; do
+    case "$arg" in
+        i) INIT=true ;;
+        r) REMOTE=true ;;
+        s) FORCE=true ;;
+        ?) printf "Usage: %s: [-i] [-r] [-s]\n" $0
+            exit 2;;
+    esac
 done
 
 # set -e
@@ -37,7 +29,7 @@ else
     if [ ! -e .git/modules ]; then
         git submodule update --init --recursive
     fi
-    echo "usage: ./install.sh [--init|--remote|--force]"
+    echo "usage: ./install.sh [-i|-r|-f]"
 fi
 
 mkdir -p ${DEST}/java
@@ -73,6 +65,11 @@ if ! type mvn 2>/dev/null; then
     exit 0
 fi
 
+mvn clean package
+cp target/bin.jar ${DEST}/java
+echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
+chmod a+x ${DEST}/sslpoke
+
 if [ ! -f ${DEST}/jd-cli ] || ${FORCE}; then
     cd jd-cmd || exit
     mvn clean package
@@ -82,15 +79,6 @@ if [ ! -f ${DEST}/jd-cli ] || ${FORCE}; then
     cd -
 elif [ -f ${DEST}/jd-cli ]; then
     echo "jd-cli file exists."
-fi
-
-if [ ! -f ${DEST}/sslpoke ] || ${FORCE}; then
-    mvn clean package
-    cp target/bin.jar ${DEST}/java
-    echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
-    chmod a+x ${DEST}/sslpoke
-elif [ -f ${DEST}/sslpoke ]; then
-    echo "sslpoke file exists."
 fi
 
 if [ ! -f ${DEST}/sjk ] || ${FORCE}; then
