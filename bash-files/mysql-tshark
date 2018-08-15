@@ -1,0 +1,4 @@
+#!/bin/bash
+if type tshark &> /dev/null; then
+    tshark -s 512 -i eth0 -n -f 'tcp dst port 3306' -Y 'mysql.query' -T fields -e mysql.query
+fi
