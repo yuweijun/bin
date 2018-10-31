@@ -22,4 +22,9 @@
     1. cglib生成的类保存目录为：`target/cblib-classes`
     1. 反射生成的类保存目录为：`target/generated-classes`
 
-    $ java -javaagent:target/bin.jar -cp "target/classes" SSLPoke www.baidu.com 443
+## run example
+
+    $ mvn clean package
+    $ java -javaagent:target/bin.jar SSLPoke www.baidu.com 443
+    $ java -cp target/bin.jar Pinyin 中文
+    $ java -jar target/bin.jar 中文

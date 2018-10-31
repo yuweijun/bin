@@ -1,5 +1,23 @@
 import java.lang.instrument.Instrumentation;
 
+/**
+ * <pre>
+ * <plugin>
+ *    <artifactId>maven-jar-plugin</artifactId>
+ *    <version>2.4</version>
+ *    <configuration>
+ *        <archive>
+ *            <manifestEntries>
+ *                <Premain-class>Premain</Premain-class>
+ *                <Boot-Class-Path>${user.home}/.m2/repository/org/javassist/javassist/3.21.0-GA/javassist-3.21.0-GA.jar</Boot-Class-Path>
+ *                <Can-Redefine-Classes>false</Can-Redefine-Classes>
+ *            </manifestEntries>
+ *            <addMavenDescriptor>false</addMavenDescriptor>
+ *        </archive>
+ *    </configuration>
+ * </plugin>
+ * </pre>
+ */
 public class Premain {
 
     static Instrumentation instrumentation;
