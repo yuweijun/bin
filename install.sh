@@ -31,7 +31,13 @@ else
     fi
 fi
 
-mkdir -p ${DEST}/java
+if [ -e /usr/libexec/java_home ]; then
+    JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+else
+    JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+fi
+
+mkdir -p ${DEST}/java/build
 
 if grep -q "${DEST}" $HOME/.bashrc; then
     echo -e "export PATH=${DEST}:\$PATH" >> $HOME/.bashrc
@@ -92,11 +98,10 @@ elif [ -f ${DEST}/sjk ]; then
 fi
 
 if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
-    mkdir -p ${DEST}/java/build
     cd btrace
     git checkout -b v1.3.11.1
     ./gradlew build -x test -x javadoc
-    JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+
     cp bin/btrace ${DEST}/java/btrace
     cp build/btrace-*.jar ${DEST}/java/build
     echo -e "#!/bin/bash\nJAVA_HOME=${JAVA_HOME}\nBTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
