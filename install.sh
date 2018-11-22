@@ -103,7 +103,7 @@ if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
     chmod a+x ${DEST}/btrace
     cd -
 elif [ -f ${DEST}/btrace ]; then
-    echo "sjk file exists."
+    echo "btrace file exists."
 fi
 
 for f in $(ls ${DEST})
