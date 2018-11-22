@@ -92,7 +92,7 @@ if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
 
     cp bin/btrace ${DEST}/java/btrace
     cp build/btrace-*.jar ${DEST}/java/build
-    echo -e "#!/bin/bash\nJAVA_HOME=${JAVA_HOME}\nBTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\nexport BTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
     chmod a+x ${DEST}/btrace
     cd -
 elif [ -f ${DEST}/btrace ]; then
