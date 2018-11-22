@@ -3,17 +3,13 @@
 cd $(dirname "$0") || exit
 DIR="$(pwd)"
 
-INIT=false
-REMOTE=false
 FORCE=false
 DEST=${DIR}/bash-files
 
-while getopts irf arg; do
+while getopts f arg; do
     case "$arg" in
-        i) INIT=true ;;
-        r) REMOTE=true ;;
         f) FORCE=true ;;
-        ?) printf "Usage: %s: [-i] [-r] [-f]\n" $0
+        ?) printf "Usage: %s: [-f]\n" $0
             exit 2;;
     esac
 done
@@ -21,15 +17,7 @@ done
 # set -e
 # set -x
 
-if $INIT; then
-    git submodule update --init --recursive
-elif $REMOTE; then
-    git submodule update --init --recursive --remote
-else
-    if [ ! -e .git/modules ]; then
-        git submodule update --init --recursive
-    fi
-fi
+git submodule update --init --recursive
 
 if [ -e /usr/libexec/java_home ]; then
     JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
