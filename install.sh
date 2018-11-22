@@ -8,12 +8,12 @@ REMOTE=false
 FORCE=false
 DEST=${DIR}/bash-files
 
-while getopts irs arg; do
+while getopts irf arg; do
     case "$arg" in
         i) INIT=true ;;
         r) REMOTE=true ;;
-        s) FORCE=true ;;
-        ?) printf "Usage: %s: [-i] [-r] [-s]\n" $0
+        f) FORCE=true ;;
+        ?) printf "Usage: %s: [-i] [-r] [-f]\n" $0
             exit 2;;
     esac
 done
@@ -29,7 +29,6 @@ else
     if [ ! -e .git/modules ]; then
         git submodule update --init --recursive
     fi
-    echo "usage: ./install.sh [-i|-r|-f]"
 fi
 
 mkdir -p ${DEST}/java
@@ -83,12 +82,27 @@ fi
 
 if [ ! -f ${DEST}/sjk ] || ${FORCE}; then
     cd jvm-tools || exit
-    mvn clean package
+    mvn -Dmaven.test.skip=true clean package
     cp sjk/target/sjk-*-SNAPSHOT.jar ${DEST}/java/sjk.jar
     echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/sjk.jar \$@" > ${DEST}/sjk
     chmod a+x ${DEST}/sjk
     cd -
 elif [ -f ${DEST}/sjk ]; then
+    echo "sjk file exists."
+fi
+
+if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
+    mkdir -p ${DEST}/java/build
+    cd btrace
+    git checkout -b v1.3.11.1
+    ./gradlew build -x test -x javadoc
+    JAVA_HOME=$(dirname $(dirname $(readlink -f $(which javac))))
+    cp bin/btrace ${DEST}/java/btrace
+    cp build/btrace-*.jar ${DEST}/java/build
+    echo -e "#!/bin/bash\nJAVA_HOME=${JAVA_HOME}\nBTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
+    chmod a+x ${DEST}/btrace
+    cd -
+elif [ -f ${DEST}/btrace ]; then
     echo "sjk file exists."
 fi
 

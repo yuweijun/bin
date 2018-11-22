@@ -10,12 +10,6 @@
 [submodule "greys-anatomy"]
 	path = greys-anatomy
 	url = https://github.com/oldmanpushcart/greys-anatomy.git
-[submodule "mitmproxy"]
-	path = mitmproxy
-	url = https://github.com/mitmproxy/mitmproxy.git
-[submodule "nvm"]
-	path = nvm
-	url = https://github.com/creationix/nvm.git
-[submodule "anyproxy"]
-	path = anyproxy
-	url = https://github.com/alibaba/anyproxy.git
+[submodule "btrace"]
+	path = btrace
+	url = git@github.com:btraceio/btrace.git
