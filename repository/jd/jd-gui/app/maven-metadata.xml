@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>jd.jd-gui</groupId>
+  <artifactId>app</artifactId>
+  <version>1.4.0</version>
+  <versioning>
+    <versions>
+      <version>1.4.0</version>
+    </versions>
+    <lastUpdated>20150811215510</lastUpdated>
+  </versioning>
+</metadata>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>jd</groupId>
+  <artifactId>eclipse-jee-juno-SR2-minimal</artifactId>
+  <version>1.0.0</version>
+  <versioning>
+    <versions>
+      <version>1.0.0</version>
+    </versions>
+    <lastUpdated>20150514054005</lastUpdated>
+  </versioning>
+</metadata>
