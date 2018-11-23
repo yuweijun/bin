@@ -7,6 +7,11 @@ cd $(dirname "$0") || exit
 DIR="$(pwd)"
 DEST=${DIR}/bash-files
 
+if ! type mvn 2>/dev/null; then
+    echo "mvn command not found"
+    exit 0
+fi
+
 git submodule update --init --recursive
 
 if [ -e /usr/libexec/java_home ]; then
@@ -19,6 +24,13 @@ mkdir -p ${DEST}/java/build
 
 if grep -q "${DEST}" $HOME/.bashrc; then
     echo -e "export PATH=${DEST}:\$PATH" >> $HOME/.bashrc
+fi
+
+if [ 'bin' ]; then
+    mvn clean package
+    cp target/bin.jar ${DEST}/java
+    echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
+    chmod a+x ${DEST}/sslpoke
 fi
 
 if [ 'greys' ]; then
@@ -39,11 +51,6 @@ else
         chmod a+x ${DEST}/decompiler
         cd -
     fi
-fi
-
-if ! type mvn 2>/dev/null; then
-    echo "mvn command not found"
-    exit 0
 fi
 
 if [ 'jd-cli' ]; then
@@ -74,13 +81,6 @@ if [ 'btrace' ]; then
     echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\nexport BTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
     chmod a+x ${DEST}/btrace
     cd -
-fi
-
-if [ 'bin' ]; then
-    mvn clean package
-    cp target/bin.jar ${DEST}/java
-    echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
-    chmod a+x ${DEST}/sslpoke
 fi
 
 for f in $(ls ${DEST})
