@@ -1,2 +1,2 @@
 #!/bin/bash
-JAVA_HOME=${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} ${HOME}/bin/java/greys.sh $@
+JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_172.jdk/Contents/Home ${HOME}/bin/java/greys.sh $@

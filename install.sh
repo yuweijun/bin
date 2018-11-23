@@ -1,21 +1,11 @@
 #!/bin/bash
 
-cd $(dirname "$0") || exit
-DIR="$(pwd)"
-
-FORCE=false
-DEST=${DIR}/bash-files
-
-while getopts f arg; do
-    case "$arg" in
-        f) FORCE=true ;;
-        ?) printf "Usage: %s: [-f]\n" $0
-            exit 2;;
-    esac
-done
-
 # set -e
 # set -x
+
+cd $(dirname "$0") || exit
+DIR="$(pwd)"
+DEST=${DIR}/bash-files
 
 git submodule update --init --recursive
 
@@ -31,16 +21,16 @@ if grep -q "${DEST}" $HOME/.bashrc; then
     echo -e "export PATH=${DEST}:\$PATH" >> $HOME/.bashrc
 fi
 
-if [ ! -f ${DEST}/greys ] || ${FORCE}; then
+if [ 'greys' ]; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
-    echo -e "#!/bin/bash\nJAVA_HOME=\${JAVA_HOME:-/usr/lib/jvm/java-8-oracle} \${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME} \${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
     chmod a+x ${DEST}/greys
 fi
 
 if ! type ant 2>/dev/null; then
     echo "ant command not found"
 else
-    if [ ! -f ${DEST}/decompiler ] || $FORCE; then
+    if [ 'decompiler' ]; then
         cd fernflower-decompiler || exit
         ant clean
         ant
@@ -48,8 +38,6 @@ else
         echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/fernflower.jar \$@" > ${DEST}/decompiler
         chmod a+x ${DEST}/decompiler
         cd -
-    elif [ -f ${DEST}/decompiler ]; then
-        echo "decompiler file exists."
     fi
 fi
 
@@ -58,34 +46,25 @@ if ! type mvn 2>/dev/null; then
     exit 0
 fi
 
-mvn clean package
-cp target/bin.jar ${DEST}/java
-echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
-chmod a+x ${DEST}/sslpoke
-
-if [ ! -f ${DEST}/jd-cli ] || ${FORCE}; then
+if [ 'jd-cli' ]; then
     cd jd-cmd || exit
-    mvn clean package
+    mvn -Dmaven.test.skip=true clean package
     cp jd-cli/target/jd-cli.jar ${DEST}/java
     echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/jd-cli.jar \$@" > ${DEST}/jd-cli
     chmod a+x ${DEST}/jd-cli
     cd -
-elif [ -f ${DEST}/jd-cli ]; then
-    echo "jd-cli file exists."
 fi
 
-if [ ! -f ${DEST}/sjk ] || ${FORCE}; then
+if [ 'sjk' ]; then
     cd jvm-tools || exit
     mvn -Dmaven.test.skip=true clean package
     cp sjk/target/sjk-*-SNAPSHOT.jar ${DEST}/java/sjk.jar
     echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/sjk.jar \$@" > ${DEST}/sjk
     chmod a+x ${DEST}/sjk
     cd -
-elif [ -f ${DEST}/sjk ]; then
-    echo "sjk file exists."
 fi
 
-if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
+if [ 'btrace' ]; then
     cd btrace
     git checkout -b v1.3.11.1
     ./gradlew build -x test -x javadoc
@@ -95,8 +74,13 @@ if [ ! -f ${DEST}/btrace ] || ${FORCE}; then
     echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\nexport BTRACE_HOME=\${HOME}/bin/java\n\${HOME}/bin/java/btrace \$@" > ${DEST}/btrace
     chmod a+x ${DEST}/btrace
     cd -
-elif [ -f ${DEST}/btrace ]; then
-    echo "btrace file exists."
+fi
+
+if [ 'bin' ]; then
+    mvn clean package
+    cp target/bin.jar ${DEST}/java
+    echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
+    chmod a+x ${DEST}/sslpoke
 fi
 
 for f in $(ls ${DEST})
