@@ -35,7 +35,7 @@ fi
 
 if [ 'greys' ]; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
-    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME} \${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\n\${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
     chmod a+x ${DEST}/greys
 fi
 
