@@ -33,6 +33,15 @@ if [ 'bin' ]; then
     chmod a+x ${DEST}/sslpoke
 fi
 
+if [ 'instrumentation' ]; then
+    cd instrumentation
+    mvn clean package
+    cp target/instrumentation.jar ${DEST}/java
+    echo -e "#!/bin/bash\njava -Djdk.internal.lambda.dumpProxyClasses -javaagent:\${HOME}/bin/java/instrumentation.jar \$@" > ${DEST}/java-dump-proxy-classes
+    chmod a+x ${DEST}/java-dump-proxy-classes
+    cd -
+fi
+
 if [ 'greys' ]; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
     echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\n\${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
