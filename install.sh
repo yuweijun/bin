@@ -92,3 +92,5 @@ do
     cp -r "${file}" ${HOME}/bin
 done
 
+git reset --hard
+
