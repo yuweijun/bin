@@ -1,2 +1,2 @@
 #!/bin/bash
-java -Djdk.internal.lambda.dumpProxyClasses -javaagent:${HOME}/bin/java/instrumentation.jar $@
+java -javaagent:${HOME}/bin/java/bin.jar $@

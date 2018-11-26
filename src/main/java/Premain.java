@@ -1,4 +1,5 @@
 import java.lang.instrument.Instrumentation;
+import java.nio.file.Paths;
 
 /**
  * <pre>
@@ -31,8 +32,13 @@ public class Premain {
     public static void premain(String args, Instrumentation inst) {
         System.out.printf("%30s : %s\n", "premain in", Premain.class.getCanonicalName());
 
+        String target = "target/classes";
+        Paths.get(target).toFile().mkdirs();
+
         // save cglib generated classes
-        System.setProperty("cglib.debugLocation", "target/cblib-classes");
+        System.setProperty("cglib.debugLocation", target);
+        // save lambda generated classes
+        System.setProperty("jdk.internal.lambda.dumpProxyClasses", target);
 
         // Provides services that allow Java programming language agents to instrument programs running on the JVM.
         instrumentation = inst;

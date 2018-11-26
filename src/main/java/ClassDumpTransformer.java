@@ -43,7 +43,8 @@ public class ClassDumpTransformer implements ClassFileTransformer {
     private void saveClass(CtClass cl, byte[] transformed) {
         try {
             String name = cl.getName();
-            if (name.startsWith("com.sun.proxy") || name.startsWith("sun.reflect")) {
+            if (name.startsWith("com.sun.proxy")
+                    || name.startsWith("sun.reflect")) {
                 String fileName = "target/generated-classes/" + name.replaceAll("\\.", "/") + ".class";
                 Path path = Paths.get(fileName);
                 Path parent = path.getParent();

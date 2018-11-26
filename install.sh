@@ -31,15 +31,8 @@ if [ 'bin' ]; then
     cp target/bin.jar ${DEST}/java
     echo -e "#!/bin/bash\njava -cp \${HOME}/bin/java/bin.jar SSLPoke \$@" > ${DEST}/sslpoke
     chmod a+x ${DEST}/sslpoke
-fi
-
-if [ 'instrumentation' ]; then
-    cd instrumentation
-    mvn clean package
-    cp target/instrumentation.jar ${DEST}/java
-    echo -e "#!/bin/bash\njava -javaagent:\${HOME}/bin/java/instrumentation.jar \$@" > ${DEST}/java-dump-proxy-classes
+    echo -e "#!/bin/bash\njava -javaagent:\${HOME}/bin/java/bin.jar \$@" > ${DEST}/java-dump-proxy-classes
     chmod a+x ${DEST}/java-dump-proxy-classes
-    cd -
 fi
 
 if [ 'greys' ]; then
