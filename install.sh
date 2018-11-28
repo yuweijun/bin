@@ -35,6 +35,11 @@ if [ 'bin' ]; then
     chmod a+x ${DEST}/java-dump-proxy-classes
 fi
 
+if [ 'arthas' ]; then
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\n\${HOME}/bin/java/as.sh \$@" > ${DEST}/arthas
+    chmod a+x ${DEST}/arthas
+fi
+
 if [ 'greys' ]; then
     cp greys-anatomy/bin/greys.sh ${DEST}/java
     echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\n\${HOME}/bin/java/greys.sh \$@" > ${DEST}/greys
