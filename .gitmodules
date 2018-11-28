@@ -7,9 +7,6 @@
 [submodule "jvm-tools"]
 	path = jvm-tools
 	url = https://github.com/aragozin/jvm-tools.git
-[submodule "greys-anatomy"]
-	path = greys-anatomy
-	url = https://github.com/oldmanpushcart/greys-anatomy.git
 [submodule "btrace"]
 	path = btrace
 	url = https://github.com/btraceio/btrace.git
