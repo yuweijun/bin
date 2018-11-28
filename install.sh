@@ -53,7 +53,7 @@ fi
 
 if [ 'decompiler' ]; then
     if $COMPILE; then
-        if ! type ant 2>/dev/null; then
+        if type ant 2>/dev/null; then
             cd fernflower-decompiler || exit
             ant clean
             ant
