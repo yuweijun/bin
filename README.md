@@ -11,7 +11,7 @@
     $ git clone https://github.com/yuweijun/bin.git bin.git
     $ cd bin.git
     $ sudo os/ubuntu.sh
-    $ ./install.sh init
+    $ ./install.sh compile
 
 ### reinstall
 
@@ -28,3 +28,4 @@
     $ java -javaagent:target/bin.jar SSLPoke www.baidu.com 443
     $ java -cp target/bin.jar Pinyin 中文
     $ java -jar target/bin.jar 中文
+

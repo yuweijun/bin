@@ -10,9 +10,7 @@ fi
 
 HOMEBREW_NO_AUTO_UPDATE=1
 
+brew tap caskroom/versions
 brew cask install java8
 brew install gradle maven
 
-pip2 install pygments
-
-npm install --global prettier
