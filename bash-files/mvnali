@@ -1,0 +1,2 @@
+#!/bin/bash
+mvn -s ${HOME}/bin/java/settings.aliyun.xml $@
