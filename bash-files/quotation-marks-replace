@@ -1,0 +1,3 @@
+#!/bin/bash
+
+xp | sed -r 's/“|”/"/g' | xc
