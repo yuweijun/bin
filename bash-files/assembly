@@ -1,0 +1,3 @@
+#!/bin/bash
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+java -server -Xcomp -XX:CompileThreshold=1 -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=${HOME}/logs/java.print.assembly-$(date +"%Y-%m-%d").log $@
