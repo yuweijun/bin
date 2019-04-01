@@ -105,7 +105,7 @@ if [ 'btrace' ]; then
 fi
 
 if [ 'java print assembly' ]; then
-    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\njava -server -Xcomp -XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=\${HOME}/logs/java.print.assembly-\$(date +\"%Y-%m-%d-%H-%M-%S\").log \$@" > ${DEST}/assembly
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\njava -server -Xcomp -XX:CompileThreshold=1 -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=\${HOME}/logs/java.print.assembly-\$(date +\"%Y-%m-%d\").log \$@" > ${DEST}/assembly
     chmod a+x ${DEST}/assembly
 fi
 
