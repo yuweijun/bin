@@ -104,6 +104,11 @@ if [ 'btrace' ]; then
     chmod a+x ${DEST}/btrace
 fi
 
+if [ 'java print assembly' ]; then
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\njava -server -Xcomp -XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=\${HOME}/logs/java.print.assembly-\$(date +\"%Y-%m-%d-%H-%M-%S\").log \$@" > ${DEST}/assembly
+    chmod a+x ${DEST}/assembly
+fi
+
 for f in $(ls ${DEST})
 do
     file=${DEST}/${f}

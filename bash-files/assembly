@@ -1,0 +1,2 @@
+#!/bin/bash
+java -server -Xcomp -XX:+UnlockDiagnosticVMOptions -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=|/home/yuweijun/logs/java.print.assembly-$(date +%Y-%m-%d-%H-%M-%S).log $@
