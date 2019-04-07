@@ -1,0 +1,10 @@
+#!/bin/bash
+
+download_user=root
+download_server="download-server"
+download_dir=$(date +"%Y-%m-%d")
+
+ssh ${download_user}@${download_server} "mkdir -p /data/downloads/${download_dir}; cd /data/downloads/${download_dir}; wget $@"
+
+rsync -av -e ssh ${download_user}@${download_server}:"/data/downloads/${download_dir}/" ${HOME}/Downloads/${download_dir}/
+
