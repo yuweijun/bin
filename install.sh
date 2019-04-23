@@ -51,7 +51,7 @@ if [ 'greys' ]; then
     chmod a+x ${DEST}/greys
 fi
 
-if [ 'decompiler' ]; then
+if [ 'javad' ]; then
     if $COMPILE; then
         if type ant 2>/dev/null; then
             cd fernflower-decompiler || exit
@@ -62,8 +62,8 @@ if [ 'decompiler' ]; then
         fi
     fi
 
-    echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/fernflower.jar \$@" > ${DEST}/decompiler
-    chmod a+x ${DEST}/decompiler
+    echo -e "#!/bin/bash\njava -jar \${HOME}/bin/java/fernflower.jar \$@" > ${DEST}/javad
+    chmod a+x ${DEST}/javad
 fi
 
 if [ 'jd-cli' ]; then
@@ -105,8 +105,8 @@ if [ 'btrace' ]; then
 fi
 
 if [ 'java print assembly' ]; then
-    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\njava -server -Xcomp -XX:CompileThreshold=1 -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=\${HOME}/logs/java.print.assembly-\$(date +\"%Y-%m-%d\").log \$@" > ${DEST}/assembly
-    chmod a+x ${DEST}/assembly
+    echo -e "#!/bin/bash\nexport JAVA_HOME=${JAVA_HOME}\njava -server -Xcomp -XX:CompileThreshold=1 -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:+TraceClassLoading -XX:+PrintAssembly -XX:+LogCompilation -XX:LogFile=\${HOME}/logs/java.print.assembly-\$(date +\"%Y-%m-%d\").log \$@" > ${DEST}/jassembly
+    chmod a+x ${DEST}/jassembly
 fi
 
 for f in $(ls ${DEST})
