@@ -1,0 +1,4 @@
+#!/bin/bash
+
+java -jar ${HOME}/bin/java/asmtools.jar jcoder $@
+

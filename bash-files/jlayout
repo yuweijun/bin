@@ -1,0 +1,4 @@
+#!/bin/bash
+
+java -XX:-RestrictContended -jar lib/jol-cli-0.9-full.jar internals $@
+
