@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: jgc pid"
+else
+    jstat -gc -h10 $@ 2000 | awwk -F " " '{printf "%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%8s\t%8s\t%5s\t%5s\t%8s\n", $1, $2, $5, $7, $9, $11, $13, $14, $15, $16, $17}'
+fi
+
+
