@@ -3,6 +3,6 @@
 if [ $# -eq 0 ]; then
     echo "Usage: jgcu pid"
 else
-    jstat -gcutil -h10 $@ 2000 | awk -F " " '{printf "%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\t%10s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11}'
+    jstat -gcutil -h10 $@ 2000 | awk -F " " '{printf "%7s\t%7s\t%7s\t%7s\t%7s\t%7s\t%7s\t%7s\t%7s\t%7s\t%7s\n", $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11}'
 fi
 
