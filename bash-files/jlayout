@@ -1,4 +1,4 @@
 #!/bin/bash
 
-java -XX:-RestrictContended -jar ${HOME}/bin/java/jol-cli-0.9-full.jar internals -cp . $@
+java -XX:-RestrictContended -jar ${HOME}/bin/java/jol-cli-0.9-full.jar internals -cp .:target/classes $@
 
