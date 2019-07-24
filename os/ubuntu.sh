@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo apt install xclip
+
 git clone https://github.com/yuweijun/hsdis
 
 cd hsdis
