@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ $# -gt 0 ]; then
+    LANG=en_US.UTF-8 vim -c "syntax on" -c "set nonu" -c "set invrelativenumber" -c TOhtml -c wqa $*
+fi
