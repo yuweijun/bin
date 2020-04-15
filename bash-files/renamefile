@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+function renamefile {
+    if [ $# -eq 0 ]; then
+        echo "first parameter should be a directory or a filename"
+    elif [ ! -e $1 ]; then
+        echo "$1 is not exist"
+    elif [ -d $1 ]; then
+        cd $1
+        for file in $(ls $1); do
+            old_file=$file
+            if [[ $file =~ [^[:alnum:]._-] ]]; then
+                new_file=${file//[^[:alnum:]._-]/}
+                if [ -f "$new_file" ]; then
+                    echo "WARNING: $new_file exists for rename $old_file"
+                elif [ -d $new_file ]; then
+                    renamefile $new_file
+                else
+                    echo "rename $old_file to $new_file"
+                    mv $old_file $new_file
+                fi
+            elif [ -d $old_file ]; then
+                renamefile $old_file
+            fi
+        done
+        cd -
+    elif [ -f $1 ]; then
+        file=$1
+        old_file=$file
+        if [[ $file =~ [^[:alnum:]._-] ]]; then
+            new_file=${file//[^[:alnum:]._-]/}
+            if [ -f "$new_file" ]; then
+                echo "WARNING: $new_file exists for rename $old_file"
+            else
+                echo "rename $old_file to $new_file"
+                mv $old_file $new_file
+            fi
+        fi
+    fi
+}
+
+IFS=$'\n'
+renamefile "$1"
+unset IFS
