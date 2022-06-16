@@ -1,0 +1,12 @@
+#! /bin/bash
+
+export ANT_HOME="$HOME/.ant"
+
+if [ -f gradlew ]; then
+  ./gradlew --no-daemon --info "$@"
+elif [ -f /usr/local/bin/gradle ]; then
+  /usr/local/bin/gradle --no-daemon --info "$@"
+else
+  echo "ERROR: current directory [$(pwd)] is not a gradle workspace."
+  exit 1
+fi
